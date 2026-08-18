@@ -17,10 +17,10 @@ const NAV_ITEMS = () => {
   const items = [
     { href: '#/', text: '首页' },
     { href: '#/resume', text: '简历' },
-    { href: '#/timeline', text: '经历' },
+    { href: '#/timeline', text: '实习经历' },
   ];
   if (site.showProjects !== false) items.push({ href: '#/works', text: '项目' });
-  if (site.showAbout !== false) items.push({ href: '#/about', text: '关于' });
+  if (site.showAbout !== false) items.push({ href: '#/about', text: '项目经历' });
   if (site.showContact !== false) items.push({ href: '#/contact', text: '联系' });
   items.push({ href: '#/search', text: '搜索' });
   return items;
@@ -30,10 +30,11 @@ export function renderShell() {
   const s = session();
   const admin = isAdmin();
   const site = state.content.site || {};
+  const name = state.content.profile?.name || site.siteName || '我的主页';
   app().innerHTML = `
     <header class="nav">
       <div class="nav-inner">
-        <a class="nav-brand" href="#/"><span class="dot"></span>${escapeHtml(site.siteName || '我的主页')}</a>
+        <a class="nav-brand" href="#/"><span class="brand-mark">${escapeHtml(name.slice(0, 1))}</span>${escapeHtml(name)}</a>
         <nav class="nav-links" id="navLinks">
           ${NAV_ITEMS().map((i) => `<a href="${i.href}">${i.text}</a>`).join('')}
           ${admin ? '<a href="#/admin">管理后台</a>' : ''}
@@ -81,44 +82,58 @@ const crumbs = (items) =>
     .map((it, i) => (it.href ? `<a href="${it.href}">${escapeHtml(it.text)}</a>` : `<b>${escapeHtml(it.text)}</b>`) + (i < items.length - 1 ? '<span>/</span>' : ''))
     .join('')}</nav>`;
 
-/* ---------- 首页 ---------- */
+/* ---------- 首页 · 深蓝封面 ---------- */
 
 export function renderHome() {
   const p = state.content.profile;
   const posts = visiblePosts().slice(0, 3);
+  const { html: aboutHtml } = renderMarkdown(p.about || '');
   const cards = [
-    { href: '#/resume', ic: '📄', t: '在线简历', d: '教育背景、工作实习、项目与技能' },
-    { href: '#/timeline', ic: '🗂️', t: '成长经历', d: '时间轴记录，支持分类筛选' },
+    { href: '#/resume', ic: '📄', t: '在线简历', d: '教育背景、实习、项目与技能' },
+    { href: '#/timeline', ic: '💼', t: '实习经历', d: '工作与实习时间轴' },
   ];
-  if (state.content.site.showProjects !== false) cards.push({ href: '#/works', ic: '🚀', t: '项目作品', d: '做过的产品与开源项目' });
-  if (state.content.site.showAbout !== false) cards.push({ href: '#/about', ic: '👤', t: '关于我', d: '更完整的个人介绍与技能' });
-  if (state.content.site.showContact !== false) cards.push({ href: '#/contact', ic: '✉️', t: '联系方式', d: '邮箱与社交账号' });
+  if (state.content.site.showAbout !== false) cards.push({ href: '#/about', ic: '🚀', t: '项目经历', d: '做过的项目与竞赛作品' });
+  if (state.content.site.showContact !== false) cards.push({ href: '#/contact', ic: '✉️', t: '联系方式', d: '邮箱与微信' });
 
   view(`
-    <div class="page">
-      <section class="hero">
-        ${p.avatar
-          ? `<img class="hero-avatar" src="${escapeHtml(safeUrl(p.avatar))}" alt="${escapeHtml(p.name)}">`
-          : `<div class="hero-avatar">${escapeHtml((p.name || '·').slice(0, 1))}</div>`}
-        <div style="flex:1;min-width:0">
+    <section class="landing">
+      <div class="landing-bg">
+        <div class="landing-admin">${editBtn('profile', '✎ 编辑资料')}</div>
+        <div class="landing-inner">
+          <a class="avatar-ring" href="#/resume" title="点击进入">
+            ${p.avatar
+              ? `<img src="${escapeHtml(safeUrl(p.avatar))}" alt="${escapeHtml(p.name)}">`
+              : `<div class="avatar-fallback">${escapeHtml((p.name || '·').slice(0, 1))}</div>`}
+            <span class="avatar-hint">点击进入</span>
+          </a>
           <h1>${escapeHtml(p.name)}</h1>
-          <p class="role">${escapeHtml(p.title || '')}</p>
-          <div>${(p.tags || []).map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
-          <p class="bio">${escapeHtml(p.bio || '')}</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn btn-primary" href="#/resume">查看简历</a>
-            <a class="btn" href="#/timeline">浏览经历</a>
-            ${editBtn('profile', '编辑资料')}
-          </div>
+          <p class="landing-role">${escapeHtml(p.title || '')}</p>
+          ${(p.contacts || []).length ? `
+          <div class="landing-contacts">
+            ${(p.contacts || []).map((c) => {
+              const link = safeUrl(c.link);
+              const inner = `<span>${escapeHtml(c.icon || '🔗')}</span><span>${escapeHtml(c.value || c.label || '')}</span>`;
+              return link
+                ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${inner}</a>`
+                : `<a href="#/contact">${inner}</a>`;
+            }).join('')}
+          </div>` : ''}
         </div>
-      </section>
+        <div class="scroll-hint">SCROLL</div>
+      </div>
+    </section>
 
+    <div class="page">
       <h2 class="section-title">去哪里看看</h2>
       <div class="nav-cards">
         ${cards.map((c) => `<a class="nav-card" href="${c.href}">
             <span class="ic">${c.ic}</span>
             <span class="tx"><h3>${c.t}</h3><p>${c.d}</p></span></a>`).join('')}
       </div>
+
+      ${aboutHtml && p.about ? `
+      <h2 class="section-title">关于我${isAdmin() ? `<a class="btn btn-sm edit-btn" href="#/admin/profile">✎ 编辑</a>` : ''}</h2>
+      <div class="card md">${aboutHtml}</div>` : ''}
 
       ${posts.length ? `
       <h2 class="section-title">最近更新 ${isAdmin() ? '<a class="btn btn-sm edit-btn" href="#/admin/posts">管理文章</a>' : ''}</h2>
@@ -220,36 +235,46 @@ function postCard(p) {
     </div>`;
 }
 
-export function renderTimeline() {
-  const cats = categories();
-  const cur = router.query().cat || '';
-  const posts = visiblePosts().filter((p) => !cur || p.category === cur);
+/* ---------- 实习经历 ---------- */
 
+function workExpItem(e, i) {
+  const period = String(e.period || '');
+  const [start, end] = period.split(/\s*[-–—~至到]\s*/);
+  const points = (e.points || []).filter(Boolean);
+  return `
+    <div class="exp-item ${i % 2 ? 'alt' : ''}">
+      <div class="exp-date">
+        <strong>${escapeHtml(start || period || '')}</strong>
+        ${end ? `<span>至 ${escapeHtml(end)}</span>` : ''}
+      </div>
+      <div class="exp-rail"><span class="exp-dot"></span></div>
+      <div class="exp-card">
+        <h3>${escapeHtml(e.company || '经历')}</h3>
+        <p class="meta">
+          ${escapeHtml(e.role || '')}${e.role ? '<span class="exp-degree">实习 / 工作</span>' : ''}
+        </p>
+        ${e.desc ? `<p style="margin:0 0 ${points.length ? 14 : 0}px;color:var(--text-soft);font-size:15px">${escapeHtml(e.desc)}</p>` : ''}
+        ${points.length ? `<ul>${points.map((x) => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
+      </div>
+    </div>`;
+}
+
+export function renderTimeline() {
+  const works = state.content.resume.work || [];
   view(`
-    <div class="page page-narrow">
-      ${crumbs([{ text: '首页', href: '#/' }, { text: '经历记录' }])}
+    <div class="page">
+      ${crumbs([{ text: '首页', href: '#/' }, { text: '实习经历' }])}
       <div class="page-head" style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap">
         <div style="flex:1">
-          <h1>成长经历</h1>
-          <p class="desc">共 ${posts.length} 篇记录</p>
+          <h1>实习经历</h1>
+          <p class="desc">共 ${works.length} 段经历</p>
         </div>
-        ${isAdmin() ? '<button class="btn btn-primary btn-sm" id="newPost" type="button">+ 新建</button>' : ''}
+        ${editBtn('resume')}
       </div>
-      <div class="filters">
-        <button class="${cur ? '' : 'active'}" data-cat="">全部</button>
-        ${cats.map((c) => `<button class="${cur === c ? 'active' : ''}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`).join('')}
-      </div>
-      ${posts.length ? `<div class="timeline">${posts.map(postCard).join('')}</div>` : '<div class="empty">还没有内容</div>'}
+      ${works.length
+        ? `<div class="exp-timeline">${works.map(workExpItem).join('')}</div>`
+        : '<div class="empty">还没有实习 / 工作经历，可在后台「简历内容」中添加</div>'}
     </div>`);
-
-  $$('.filters button').forEach((b) =>
-    b.addEventListener('click', () => {
-      const c = b.dataset.cat;
-      router.go(c ? `/timeline?cat=${encodeURIComponent(c)}` : '/timeline');
-    })
-  );
-  const nb = document.getElementById('newPost');
-  if (nb) nb.addEventListener('click', () => openPostEditor(null));
 }
 
 /* ---------- 文章详情 ---------- */
@@ -261,7 +286,7 @@ export function renderPost(params) {
 
   view(`
     <div class="page page-narrow">
-      ${crumbs([{ text: '首页', href: '#/' }, { text: '经历记录', href: '#/timeline' }, { text: p.title }])}
+      ${crumbs([{ text: '首页', href: '#/' }, { text: '文章', href: '#/' }, { text: p.title }])}
       <article>
         <header class="article-head">
           <h1>${escapeHtml(p.title)}</h1>
@@ -282,7 +307,7 @@ export function renderPost(params) {
         <div class="md">${body}</div>
       </article>
       <hr>
-      <a class="btn" href="#/timeline">← 返回列表</a>
+      <a class="btn" href="#/">← 返回首页</a>
     </div>`);
 
   const eb = document.getElementById('editPost');
@@ -321,27 +346,30 @@ export function renderWorks() {
     </div>`);
 }
 
-/* ---------- 关于 ---------- */
+/* ---------- 项目经历 ---------- */
 
 export function renderAbout() {
-  const p = state.content.profile;
-  const { html: body } = renderMarkdown(p.about || '');
-  const skills = state.content.resume.skills || [];
+  const projects = state.content.resume.projects || [];
   view(`
-    <div class="page page-narrow">
-      ${crumbs([{ text: '首页', href: '#/' }, { text: '关于我' }])}
+    <div class="page">
+      ${crumbs([{ text: '首页', href: '#/' }, { text: '项目经历' }])}
       <div class="page-head" style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap">
-        <div style="flex:1"><h1>关于我</h1><p class="desc">${escapeHtml(p.tagline || '')}</p></div>
-        ${editBtn('profile')}
+        <div style="flex:1">
+          <h1>项目经历</h1>
+          <p class="desc">共 ${projects.length} 个项目</p>
+        </div>
+        ${editBtn('resume')}
       </div>
-      <div class="card md">${body || '<p class="muted">暂无内容</p>'}</div>
-      ${skills.length ? `
-        <h2 class="section-title">技能可视化</h2>
-        <div class="card">${skills.map((s) => `
-          <div class="skill-row">
-            <div class="name"><span>${escapeHtml(s.name)}</span><span class="muted">${Number(s.level) || 0}%</span></div>
-            <div class="skill-bar"><i style="width:${Math.max(0, Math.min(100, Number(s.level) || 0))}%"></i></div>
-          </div>`).join('')}</div>` : ''}
+      ${projects.length ? `<div class="pj-grid">${projects.map((e) => `
+        <div class="pj-card">
+          <div class="pj-head">
+            <span>${escapeHtml(e.period || '')}</span>
+            <strong>${escapeHtml(e.role || '成员')}</strong>
+          </div>
+          <h2>${escapeHtml(e.name || '未命名项目')}</h2>
+          <p>${escapeHtml(e.desc || '')}</p>
+          ${(e.points || []).length ? `<ul>${e.points.map((x) => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
+        </div>`).join('')}</div>` : '<div class="empty">还没有项目经历，可在后台「简历内容」中添加</div>'}
     </div>`);
 }
 
