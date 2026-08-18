@@ -438,7 +438,7 @@ input:focus, select:focus, textarea:focus {
 }
 .landing-contacts a:hover { background: rgba(255, 255, 255, 0.26); transform: translateY(-2px); text-decoration: none; }
 .landing-admin {
-  position: absolute; top: 14px; right: 16px; z-index: 2;
+  position: absolute; top: calc(var(--nav-h) + 14px); right: 16px; z-index: 2;
 }
 .scroll-hint {
   position: absolute;
