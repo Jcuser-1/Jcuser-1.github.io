@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>404 · 页面不存在</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="./assets/css/style.css" />
+<script>
+  // GitHub Pages 静态托管：把未知路径重定向回单页应用入口，保留原始路径信息
+  (function () {
+    var base = location.pathname.replace(/\/[^/]*$/, '/');
+    var isRoot = /(^|\/)404\.html$/.test(location.pathname);
+    if (isRoot && !sessionStorage.getItem('jcweb.404.redirected')) {
+      sessionStorage.setItem('jcweb.404.redirected', '1');
+      location.replace(base + 'index.html#/404');
+    }
+  })();
+</script>
+</head>
+<body>
+<div class="app-root">
+  <main class="page page-404">
+    <div class="err-code">404</div>
+    <h1>页面走丢了</h1>
+    <p class="muted">你访问的地址不存在，或者内容需要通过验证后才能查看。</p>
+    <p><a class="btn btn-primary" href="./index.html">返回首页</a></p>
+  </main>
+</div>
+</body>
+</html>
