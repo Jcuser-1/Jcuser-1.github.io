@@ -234,6 +234,8 @@ function startApp() {
       router.go('/', true);
       return;
     }
+    // 每页专属动态背景标记
+    document.body.dataset.page = path.split('?')[0].split('/')[1] || 'home';
     views.highlightNav(path);
   });
 
