@@ -1,7 +1,7 @@
 {
   "v": 1,
   "app": "jcweb",
-  "updatedAt": "2026-08-18T08:17:44.075Z",
+  "updatedAt": "2026-08-18T08:48:15.624Z",
   "keys": [
     {
       "id": "admin",
@@ -12,9 +12,9 @@
       "expiresAt": null,
       "maxVisits": null,
       "iterations": 210000,
-      "salt": "u5RagAu5vnj140BqgfF5hw==",
-      "iv": "ZK5VX/iMWL8oXd99",
-      "wrapped": "5+tHj3WmJJakT2d4sb8hkMntrCjepH9/ikIkx1aFoJddnd1iwD0F4kjfog5idOW5"
+      "salt": "10zDU3CbdKWBvvu+SZtqlQ==",
+      "iv": "sSANhjP0mNp4xJIw",
+      "wrapped": "Wiqsq0mDErUkPPwFLBc1j0ylVLT4dRG2w3XaW2KklMlXTzeJX2WMIIus+YckeWHO"
     },
     {
       "id": "guest_default",
