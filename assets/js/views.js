@@ -98,7 +98,9 @@ export function renderHome() {
   view(`
     <section class="landing">
       <div class="landing-bg">
-        <div class="landing-admin">${editBtn('profile', '✎ 编辑资料')}</div>
+        <video class="landing-video" id="landingVideo" autoplay muted loop playsinline preload="auto" src="assets/video/cover.mp4"></video>
+        <div class="landing-veil"></div>
+        <div class="landing-admin">${editBtn('profile', '编辑资料')}</div>
         <div class="landing-inner">
           <a class="avatar-ring" href="#/resume" title="点击进入">
             ${p.avatar
@@ -141,6 +143,19 @@ export function renderHome() {
         ${posts.map(postCard).join('')}
       </div>` : ''}
     </div>`);
+
+  const lv = document.getElementById('landingVideo');
+  if (lv) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      lv.pause();
+      lv.removeAttribute('autoplay');
+    } else {
+      lv.addEventListener('canplay', () => lv.classList.add('is-ready'), { once: true });
+      if (lv.readyState >= 3) lv.classList.add('is-ready');
+      lv.addEventListener('error', () => lv.remove(), { once: true });
+      lv.play().catch(() => {});
+    }
+  }
 }
 
 /* ---------- 简历 ---------- */

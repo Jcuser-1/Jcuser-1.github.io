@@ -50,10 +50,26 @@ function renderError(msg) {
 
 /* ---------- 登录页（唯一公开页面） ---------- */
 
+/** 视频背景通用处理：可播淡入、失败移除、减弱动效时不自动播放 */
+function bindBgVideo(video) {
+  if (!video) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    video.pause();
+    video.removeAttribute('autoplay');
+    return;
+  }
+  video.addEventListener('canplay', () => video.classList.add('is-ready'), { once: true });
+  if (video.readyState >= 3) video.classList.add('is-ready');
+  video.addEventListener('error', () => video.remove(), { once: true });
+  video.play().catch(() => {});
+}
+
 function renderLogin(message = '') {
   document.title = '访问验证 · 个人主页';
   app().innerHTML = `
     <div class="gate">
+      <video class="gate-video" autoplay muted loop playsinline preload="auto" src="assets/video/cover.mp4"></video>
+      <div class="gate-veil"></div>
       <form class="gate-box" id="loginForm" autocomplete="off">
         <div class="gate-logo">🔒</div>
         <h1>访问验证</h1>
@@ -68,6 +84,7 @@ function renderLogin(message = '') {
         <div class="gate-foot">内容经 AES-256-GCM 加密存储，未验证无法获取任何数据</div>
       </form>
     </div>`;
+  bindBgVideo(document.querySelector('.gate-video'));
 
   const form = $('#loginForm');
   const msg = $('#msg');
@@ -110,6 +127,8 @@ function renderSetup() {
   const cfg = gh.getConfig();
   app().innerHTML = `
     <div class="gate">
+      <video class="gate-video" autoplay muted loop playsinline preload="auto" src="assets/video/cover.mp4"></video>
+      <div class="gate-veil"></div>
       <form class="gate-box wide" id="setupForm" autocomplete="off">
         <div class="gate-logo">✨</div>
         <h1>首次初始化</h1>
@@ -134,6 +153,7 @@ function renderSetup() {
         <div class="gate-foot">密码一旦丢失将无法恢复任何内容，请务必妥善保存</div>
       </form>
     </div>`;
+  bindBgVideo(document.querySelector('.gate-video'));
 
   const a1 = $('#a1');
   a1.addEventListener('input', () => ($('#aTip').textContent = `强度：${passwordStrength(a1.value).text}`));
