@@ -165,18 +165,18 @@ export function renderHome() {
 
 /** 机构徽标映射：每个机构提供浅色/深色两版，主题切换时由 CSS 自动换图 */
 const ORG_LOGOS = {
-  '电子科技大学': { light: 'assets/img/uestc.svg', dark: 'assets/img/uestc-dark.svg' },
-  '浙江理工大学': { light: 'assets/img/浙江理工大学.webp', dark: 'assets/img/浙江理工大学-dark.webp' },
+  '电子科技大学': { light: 'assets/img/电子科技大学.png', dark: 'assets/img/电子科技大学-dark.png' },
+  '浙江理工大学': { light: 'assets/img/浙江理工大学.png', dark: 'assets/img/浙江理工大学-dark.png' },
   '梅卡曼德': { light: 'assets/img/梅卡曼德logo.png', dark: 'assets/img/梅卡曼德logo-dark.png' },
-  '联芸': { light: 'assets/img/联芸科技.webp', dark: 'assets/img/联芸科技-dark.webp' },
+  '联芸': { light: 'assets/img/联芸科技.png', dark: 'assets/img/联芸科技-dark.png' },
 };
 const orgLogoHtml = (name) => {
   const hit = Object.entries(ORG_LOGOS).find(([k]) => String(name || '').includes(k));
   if (!hit) return `<span class="org-logo org-logo-text">${escapeHtml((name || '·').slice(0, 1))}</span>`;
   const { light, dark } = hit[1];
   return `<span class="org-logo-wrap">
-    <img class="org-logo img-l" src="${encodeURI(light)}?v=hd" alt="${escapeHtml(name)}" loading="lazy">
-    <img class="org-logo img-d" src="${encodeURI(dark)}?v=hd" alt="" loading="lazy">
+    <img class="org-logo img-l" src="${encodeURI(light)}?v=hd2" alt="${escapeHtml(name)}" loading="lazy">
+    <img class="org-logo img-d" src="${encodeURI(dark)}?v=hd2" alt="" loading="lazy">
   </span>`;
 };
 
