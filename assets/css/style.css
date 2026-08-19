@@ -777,14 +777,14 @@ input:focus, select:focus, textarea:focus {
 /* 机构徽标：浅色/深色双版本，主题切换自动换图 */
 .org-logo-wrap { display: inline-flex; align-items: center; flex: none; }
 .org-logo {
-  height: 44px; width: auto; max-width: 132px;
+  height: 56px; width: auto; max-width: 190px;
   object-fit: contain;
 }
 .org-logo.img-d { display: none; }
 [data-theme="dark"] .org-logo.img-l { display: none; }
 [data-theme="dark"] .org-logo.img-d { display: block; }
 /* 教育背景校徽放大 */
-.entry .org-logo { height: 58px; max-width: 300px; }
+.entry .org-logo { height: 80px; max-width: 340px; }
 .org-logo-text {
   display: grid; place-items: center;
   width: 44px; height: 44px;
