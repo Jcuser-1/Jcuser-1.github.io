@@ -4,7 +4,7 @@
 import { state, visiblePosts, visibleWorks, findPost, categories, markDirty } from './store.js';
 import { isAdmin, session, logout } from './auth.js';
 import { renderMarkdown, readingTime, excerpt, escapeHtml } from './markdown.js';
-import { $, $$, bindCodeCopy, toggleTheme, formatDate, safeUrl, toast, modal } from './ui.js';
+import { $, $$, bindCodeCopy, formatDate, safeUrl, toast, modal } from './ui.js';
 import * as router from './router.js';
 import { openPostEditor } from './editor.js';
 
@@ -44,7 +44,6 @@ export function renderShell() {
         </nav>
         <div class="nav-actions">
           <span class="role-chip ${admin ? 'admin' : ''}" title="当前身份">${admin ? '管理员' : '访客'}</span>
-          <button class="icon-btn" id="themeBtn" type="button" title="切换深浅色">🌓</button>
           <button class="icon-btn" id="logoutBtn" type="button" title="退出登录">⏻</button>
           <button class="icon-btn nav-toggle" id="navToggle" type="button" title="菜单">☰</button>
         </div>
@@ -53,7 +52,6 @@ export function renderShell() {
     <main id="view"></main>
     <footer class="footer">${escapeHtml(site.footer || '')}</footer>`;
 
-  $('#themeBtn').addEventListener('click', toggleTheme);
   $('#logoutBtn').addEventListener('click', () => {
     logout();
     location.reload();
@@ -163,21 +161,17 @@ export function renderHome() {
 
 /* ---------- 简历 ---------- */
 
-/** 机构徽标映射：每个机构提供浅色/深色两版，主题切换时由 CSS 自动换图 */
+/** 机构徽标映射（全站浅色模式，单版本） */
 const ORG_LOGOS = {
-  '电子科技大学': { light: 'assets/img/电子科技大学.png', dark: 'assets/img/电子科技大学-dark.png' },
-  '浙江理工大学': { light: 'assets/img/浙江理工大学.png', dark: 'assets/img/浙江理工大学-dark.png' },
-  '梅卡曼德': { light: 'assets/img/梅卡曼德logo.png', dark: 'assets/img/梅卡曼德logo-dark.png' },
-  '联芸': { light: 'assets/img/联芸科技.png', dark: 'assets/img/联芸科技-dark.png' },
+  '电子科技大学': 'assets/img/电子科技大学.png',
+  '浙江理工大学': 'assets/img/浙江理工大学.png',
+  '梅卡曼德': 'assets/img/梅卡曼德logo.png',
+  '联芸': 'assets/img/联芸科技.png',
 };
 const orgLogoHtml = (name) => {
   const hit = Object.entries(ORG_LOGOS).find(([k]) => String(name || '').includes(k));
   if (!hit) return `<span class="org-logo org-logo-text">${escapeHtml((name || '·').slice(0, 1))}</span>`;
-  const { light, dark } = hit[1];
-  return `<span class="org-logo-wrap">
-    <img class="org-logo img-l" src="${encodeURI(light)}?v=hd3" alt="${escapeHtml(name)}" loading="lazy">
-    <img class="org-logo img-d" src="${encodeURI(dark)}?v=hd3" alt="" loading="eager">
-  </span>`;
+  return `<img class="org-logo" src="${encodeURI(hit[1])}?v=hd4" alt="${escapeHtml(name)}" loading="lazy">`;
 };
 
 /** 简历正文（教育 / 工作 / 项目 / 技能 / 奖项），公开简历页与版本预览共用 */

@@ -3,21 +3,23 @@
  */
 import { loadVault, decryptContent, initVault, state } from './store.js';
 import { login, restore, session, isAdmin, logout } from './auth.js';
-import { initTheme, initBackToTop, toast, $ } from './ui.js';
+import { initBackToTop, toast, $ } from './ui.js';
 import { escapeHtml } from './markdown.js';
 import { passwordStrength } from './crypto.js';
 import { mountTechCanvas } from './bg-canvas.js';
 import * as gh from './github.js';
 import * as router from './router.js';
-import * as views from './views.js?v=20260820d';
-import { renderAdmin } from './editor.js?v=20260820d';
+import * as views from './views.js?v=20260821a';
+import { renderAdmin } from './editor.js?v=20260821a';
 
 const app = () => document.getElementById('app');
 
 /* ---------- 启动 ---------- */
 
 async function boot() {
-  initTheme();
+  // 全站固定浅色模式（深色模式已移除，清除历史主题偏好）
+  document.documentElement.setAttribute('data-theme', 'light');
+  try { localStorage.removeItem('jcweb.theme'); } catch (_) {}
   initBackToTop();
 
   let vault;

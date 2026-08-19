@@ -37,29 +37,6 @@
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-[data-theme="dark"] {
-  --brand: #0a84ff;
-  --brand-soft: rgba(10, 132, 255, 0.16);
-  --brand-strong: #409cff;
-  --bg: #141416;
-  --bg-elev: #1d1d1f;
-  --bg-sunken: #26262a;
-  --ink: #f5f5f7;
-  --fill: rgba(255, 255, 255, 0.08);
-  --fill-strong: rgba(255, 255, 255, 0.14);
-  --text: #f5f5f7;
-  --text-soft: rgba(245, 245, 247, 0.82);
-  --muted: rgba(235, 235, 245, 0.55);
-  --border: rgba(255, 255, 255, 0.1);
-  --danger: #ff453a;
-  --success: #30d158;
-  --warning: #ff9f0a;
-  --accent: #7d7bff;
-  --shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 16px 40px rgba(0, 0, 0, 0.35);
-  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.3);
-  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.35), 0 20px 48px rgba(0, 0, 0, 0.4);
-}
-
 * { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -372,12 +349,6 @@ input:focus, select:focus, textarea:focus {
   --nav-line: rgba(0, 51, 102, 0.14);
   --nav-accent: #003366;
 }
-[data-theme="dark"] {
-  --nav-ink: #9db8dc;
-  --nav-ink-soft: #b7cbe6;
-  --nav-line: rgba(255, 255, 255, 0.1);
-  --nav-accent: #5e9bd6;
-}
 
 .nav {
   position: sticky;
@@ -389,7 +360,7 @@ input:focus, select:focus, textarea:focus {
   border-bottom: 1px solid var(--nav-line);
   box-shadow: 0 1px 0 rgba(0, 51, 102, 0.03);
 }
-[data-theme="dark"] .nav { background: rgba(18, 21, 28, 0.92); }
+
 .nav-inner {
   max-width: var(--maxw);
   height: 64px;
@@ -413,7 +384,7 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 3px 10px rgba(0, 51, 102, 0.25);
   transition: transform .35s cubic-bezier(.2, .8, .3, 1);
 }
-[data-theme="dark"] .brand-mark { background: #2c5f9e; }
+
 .nav-brand:hover .brand-mark { transform: rotate(10deg) scale(1.06); }
 .brand-text { display: flex; flex-direction: column; justify-content: center; line-height: 1.25; }
 .brand-text b { font-size: 17px; font-weight: 700; color: var(--nav-ink); }
@@ -434,9 +405,9 @@ input:focus, select:focus, textarea:focus {
   transition: background-color .2s ease, color .2s ease;
 }
 .nav-links a:hover { background: rgba(0, 51, 102, 0.06); color: var(--nav-ink); text-decoration: none; }
-[data-theme="dark"] .nav-links a:hover { background: rgba(255, 255, 255, 0.07); }
+
 .nav-links a.active { background: transparent; color: var(--nav-ink); font-weight: 700; }
-[data-theme="dark"] .nav-links a.active { color: #e7f0fb; }
+
 .nav-links a.active::after {
   content: ""; position: absolute;
   left: 13px; right: 13px; bottom: 2px;
@@ -461,15 +432,14 @@ input:focus, select:focus, textarea:focus {
 .icon-btn:active { transform: scale(.9); }
 .nav .icon-btn { color: var(--nav-ink-soft); }
 .nav .icon-btn:hover { background: rgba(0, 51, 102, 0.08); color: var(--nav-ink); box-shadow: none; transform: translateY(-1px); }
-[data-theme="dark"] .nav .icon-btn:hover { background: rgba(255, 255, 255, 0.1); }
+
 .nav-toggle { display: none; }
 .role-chip {
   font-size: .74rem; padding: 3px 10px; border-radius: 980px;
   background: rgba(0, 51, 102, 0.07); color: var(--nav-ink-soft); border: none; font-weight: 600;
 }
-[data-theme="dark"] .role-chip { background: rgba(255, 255, 255, 0.08); color: #b7cbe6; }
+
 .role-chip.admin { background: rgba(0, 51, 102, 0.1); color: var(--nav-ink); }
-[data-theme="dark"] .role-chip.admin { color: #e7f0fb; }
 
 /* ---------- 布局 ---------- */
 
@@ -774,16 +744,13 @@ input:focus, select:focus, textarea:focus {
 .exp-org-main h3 { margin: 0 0 4px; }
 .exp-org-main .meta { margin: 0; }
 
-/* 机构徽标：浅色/深色双版本，主题切换自动换图 */
-.org-logo-wrap { display: inline-flex; align-items: center; flex: none; }
+/* 机构徽标（全站浅色，单版本） */
 .org-logo {
   height: 56px; width: auto; max-width: 190px;
   object-fit: contain;
+  flex: none;
 }
-/* 深色版：单色浅白，主题切换直接显隐（两版均 eager 加载） */
-.org-logo.img-d { display: none; }
-[data-theme="dark"] .org-logo.img-l { display: none; }
-[data-theme="dark"] .org-logo.img-d { display: block; }
+
 /* 教育背景校徽放大 */
 .entry .org-logo { height: 80px; max-width: 340px; }
 .org-logo-text {
@@ -794,7 +761,7 @@ input:focus, select:focus, textarea:focus {
   font-size: 19px; font-weight: 700;
   border-radius: 12px;
 }
-[data-theme="dark"] .org-logo-text { background: #2c5f9e; }
+
 .entry-head { align-items: center; }
 .entry-main { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .entry-line { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0; }
@@ -1279,7 +1246,6 @@ p { text-wrap: pretty; }
     border-bottom: 1px solid var(--nav-line);
     display: none;
   }
-  [data-theme="dark"] .nav-links { background: rgba(18, 21, 28, 0.96); }
   .nav-links.open { display: flex; }
   .nav-links a { padding: 12px 14px; border-radius: 10px; }
   .nav-links a.active::after { display: none; }
