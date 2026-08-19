@@ -157,6 +157,13 @@ export function renderHome() {
       lv.play().catch(() => {});
     }
   }
+
+  // 封面底部滚动提示：点击平滑滚到内容区
+  const sh = document.querySelector('.scroll-hint');
+  if (sh) sh.addEventListener('click', () => {
+    const target = document.querySelector('.page');
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
 }
 
 /* ---------- 简历 ---------- */
