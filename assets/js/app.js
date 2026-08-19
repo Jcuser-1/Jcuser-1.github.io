@@ -9,8 +9,8 @@ import { passwordStrength } from './crypto.js';
 import { mountTechCanvas } from './bg-canvas.js';
 import * as gh from './github.js';
 import * as router from './router.js';
-import * as views from './views.js?v=20260821a';
-import { renderAdmin } from './editor.js?v=20260821a';
+import * as views from './views.js?v=20260821b';
+import { renderAdmin } from './editor.js?v=20260821b';
 
 const app = () => document.getElementById('app');
 

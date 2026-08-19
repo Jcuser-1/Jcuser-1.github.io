@@ -792,7 +792,13 @@ input:focus, select:focus, textarea:focus {
 
 /* ---------- 项目经历 ---------- */
 
-.pj-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+/* ---------- 项目经历（瀑布流：卡片按实际内容高度排列） ---------- */
+
+.pj-grid { columns: 2; column-gap: 22px; }
+.pj-grid > .pj-card {
+  break-inside: avoid;
+  margin-bottom: 22px;
+}
 .pj-card {
   display: flex; flex-direction: column;
   padding: 30px 32px;
@@ -1218,7 +1224,7 @@ p { text-wrap: pretty; }
 /* ---------- 响应式 ---------- */
 
 @media (max-width: 900px) {
-  .pj-grid { grid-template-columns: 1fr; }
+  .pj-grid { columns: 1; }
   .admin-layout { grid-template-columns: 1fr; }
   .admin-menu { position: static; flex-direction: row; overflow-x: auto; padding-bottom: 6px; gap: 6px; }
   .admin-menu button { white-space: nowrap; background: var(--fill); }

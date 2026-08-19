@@ -171,7 +171,7 @@ const ORG_LOGOS = {
 const orgLogoHtml = (name) => {
   const hit = Object.entries(ORG_LOGOS).find(([k]) => String(name || '').includes(k));
   if (!hit) return `<span class="org-logo org-logo-text">${escapeHtml((name || '·').slice(0, 1))}</span>`;
-  return `<img class="org-logo" src="${encodeURI(hit[1])}?v=hd4" alt="${escapeHtml(name)}" loading="lazy">`;
+  return `<img class="org-logo" src="${encodeURI(hit[1])}?v=hd5" alt="${escapeHtml(name)}" loading="lazy">`;
 };
 
 /** 简历正文（教育 / 工作 / 项目 / 技能 / 奖项），公开简历页与版本预览共用 */
