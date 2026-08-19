@@ -281,12 +281,12 @@ function openInterviewNote(item, title) {
 }
 
 function bindNoteButtons(root, list, attr) {
-  $$(`[data-${attr}]`, root).forEach((b) =>
+  $$(`[data-${attr}]`, root).forEach((b) => {
     b.addEventListener('click', () => {
-      const item = list[+b.dataset[attr === 'noteWork' ? 'noteWork' : 'noteProj']];
+      const item = list[+b.dataset[attr === 'note-work' ? 'noteWork' : 'noteProj']];
       if (item) openInterviewNote(item, item.company || item.name || '');
-    })
-  );
+    });
+  });
 }
 
 const noteBtn = (attr, idx, has) =>
@@ -309,7 +309,7 @@ function workExpItem(e, i) {
         <h3>${escapeHtml(e.company || '经历')}</h3>
         <p class="meta">
           ${escapeHtml(e.role || '')}${e.role ? '<span class="exp-degree">实习 / 工作</span>' : ''}
-          ${noteBtn('noteWork', i, !!e.interviewNote)}
+          ${noteBtn('note-work', i, !!e.interviewNote)}
         </p>
         ${e.desc ? `<p style="margin:0 0 ${points.length ? 14 : 0}px;color:var(--text-soft);font-size:15px">${escapeHtml(e.desc)}</p>` : ''}
         ${points.length ? `<ul>${points.map((x) => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
@@ -333,7 +333,7 @@ export function renderTimeline() {
         ? `<div class="exp-timeline">${works.map(workExpItem).join('')}</div>`
         : '<div class="empty">还没有实习 / 工作经历，可在后台「简历内容」中添加</div>'}
     </div>`);
-  bindNoteButtons(document, works, 'noteWork');
+  bindNoteButtons(document, works, 'note-work');
 }
 
 /* ---------- 文章详情 ---------- */
@@ -423,7 +423,7 @@ export function renderAbout() {
         <div class="pj-card">
           <div class="pj-head">
             <span>${escapeHtml(e.period || '')}</span>
-            ${noteBtn('noteProj', i, !!e.interviewNote)}
+            ${noteBtn('note-proj', i, !!e.interviewNote)}
             <strong>${escapeHtml(e.role || '成员')}</strong>
           </div>
           <h2>${escapeHtml(e.name || '未命名项目')}</h2>
@@ -431,7 +431,7 @@ export function renderAbout() {
           ${(e.points || []).length ? `<ul>${e.points.map((x) => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
         </div>`).join('')}</div>` : '<div class="empty">还没有项目经历，可在后台「简历内容」中添加</div>'}
     </div>`);
-  bindNoteButtons(document, projects, 'noteProj');
+  bindNoteButtons(document, projects, 'note-proj');
 }
 
 /* ---------- 联系 ---------- */
