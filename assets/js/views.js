@@ -163,23 +163,21 @@ export function renderHome() {
 
 /* ---------- 简历 ---------- */
 
-/** 机构徽标映射：教育背景 / 实习卡片自动匹配（文件名含中文，需编码） */
+/** 机构徽标映射：每个机构提供浅色/深色两版，主题切换时由 CSS 自动换图 */
 const ORG_LOGOS = {
-  '电子科技大学': 'assets/img/电子科技大学.webp?v=alpha',
-  '浙江理工大学': 'assets/img/浙江理工大学.webp?v=alpha',
-  '梅卡曼德': 'assets/img/梅卡曼德logo.png?v=alpha',
-  '联芸': 'assets/img/联芸科技.webp?v=alpha',
-};
-const logoFor = (name) => {
-  const n = String(name || '');
-  for (const [k, v] of Object.entries(ORG_LOGOS)) if (n.includes(k)) return encodeURI(v);
-  return null;
+  '电子科技大学': { light: 'assets/img/uestc.svg', dark: 'assets/img/uestc-dark.svg' },
+  '浙江理工大学': { light: 'assets/img/浙江理工大学.webp', dark: 'assets/img/浙江理工大学-dark.webp' },
+  '梅卡曼德': { light: 'assets/img/梅卡曼德logo.png', dark: 'assets/img/梅卡曼德logo-dark.png' },
+  '联芸': { light: 'assets/img/联芸科技.webp', dark: 'assets/img/联芸科技-dark.webp' },
 };
 const orgLogoHtml = (name) => {
-  const src = logoFor(name);
-  return src
-    ? `<img class="org-logo" src="${src}" alt="${escapeHtml(name)}" loading="lazy">`
-    : `<span class="org-logo org-logo-text">${escapeHtml((name || '·').slice(0, 1))}</span>`;
+  const hit = Object.entries(ORG_LOGOS).find(([k]) => String(name || '').includes(k));
+  if (!hit) return `<span class="org-logo org-logo-text">${escapeHtml((name || '·').slice(0, 1))}</span>`;
+  const { light, dark } = hit[1];
+  return `<span class="org-logo-wrap">
+    <img class="org-logo img-l" src="${encodeURI(light)}?v=hd" alt="${escapeHtml(name)}" loading="lazy">
+    <img class="org-logo img-d" src="${encodeURI(dark)}?v=hd" alt="" loading="lazy">
+  </span>`;
 };
 
 /** 简历正文（教育 / 工作 / 项目 / 技能 / 奖项），公开简历页与版本预览共用 */

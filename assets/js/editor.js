@@ -8,7 +8,7 @@ import { renderMarkdown, escapeHtml } from './markdown.js';
 import { $, $$, toast, modal, confirmDialog, uid, formatDate } from './ui.js';
 import { passwordStrength } from './crypto.js';
 import * as router from './router.js';
-import { resumeBodyHtml } from './views.js?v=20260819h';
+import { resumeBodyHtml } from './views.js?v=20260820a';
 
 const SECTIONS = [
   { id: 'profile', name: '基础信息' },

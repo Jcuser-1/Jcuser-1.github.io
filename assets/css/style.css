@@ -774,26 +774,26 @@ input:focus, select:focus, textarea:focus {
 .exp-org-main h3 { margin: 0 0 4px; }
 .exp-org-main .meta { margin: 0; }
 
-/* 机构徽标（透明底图标 / 首字兜底） */
+/* 机构徽标：浅色/深色双版本，主题切换自动换图 */
+.org-logo-wrap { display: inline-flex; align-items: center; flex: none; }
 .org-logo {
   height: 44px; width: auto; max-width: 132px;
-  flex: none;
   object-fit: contain;
 }
+.org-logo.img-d { display: none; }
+[data-theme="dark"] .org-logo.img-l { display: none; }
+[data-theme="dark"] .org-logo.img-d { display: block; }
 /* 教育背景校徽放大 */
-.entry .org-logo { height: 58px; max-width: 176px; }
-/* 深色模式：提亮 + 柔光，让深色系校徽融入背景（替代白色垫底） */
-[data-theme="dark"] .org-logo {
-  filter: brightness(1.75) drop-shadow(0 0 7px rgba(255, 255, 255, 0.22));
-}
+.entry .org-logo { height: 58px; max-width: 300px; }
 .org-logo-text {
   display: grid; place-items: center;
   width: 44px; height: 44px;
-  background: var(--nav-ink, #003366);
+  background: #003366;
   color: #fff;
   font-size: 19px; font-weight: 700;
   border-radius: 12px;
 }
+[data-theme="dark"] .org-logo-text { background: #2c5f9e; }
 .entry-head { align-items: center; }
 .entry-main { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .entry-line { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0; }
