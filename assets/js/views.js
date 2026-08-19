@@ -34,7 +34,10 @@ export function renderShell() {
   app().innerHTML = `
     <header class="nav">
       <div class="nav-inner">
-        <a class="nav-brand" href="#/"><span class="brand-mark">${escapeHtml(name.slice(0, 1))}</span>${escapeHtml(name)}</a>
+        <a class="nav-brand" href="#/">
+          <span class="brand-mark">${escapeHtml(name.slice(0, 1))}</span>
+          <span class="brand-text"><b>${escapeHtml(name)}</b><small>UESTC · INSTRUMENT ENGINEERING</small></span>
+        </a>
         <nav class="nav-links" id="navLinks">
           ${NAV_ITEMS().map((i) => `<a href="${i.href}">${i.text}</a>`).join('')}
           ${admin ? '<a href="#/admin">管理后台</a>' : ''}
