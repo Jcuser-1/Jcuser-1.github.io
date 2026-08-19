@@ -1,10 +1,10 @@
 /**
  * 页面视图：全部在登录成功后才会渲染。
  */
-import { state, visiblePosts, visibleWorks, findPost, categories } from './store.js';
+import { state, visiblePosts, visibleWorks, findPost, categories, markDirty } from './store.js';
 import { isAdmin, session, logout } from './auth.js';
 import { renderMarkdown, readingTime, excerpt, escapeHtml } from './markdown.js';
-import { $, $$, bindCodeCopy, toggleTheme, formatDate, safeUrl } from './ui.js';
+import { $, $$, bindCodeCopy, toggleTheme, formatDate, safeUrl, toast, modal } from './ui.js';
 import * as router from './router.js';
 import { openPostEditor } from './editor.js';
 
@@ -252,6 +252,48 @@ function postCard(p) {
 
 /* ---------- 实习经历 ---------- */
 
+/** 面试笔记：仅管理员可见的私密备注，不对外渲染、不进打印 */
+function openInterviewNote(item, title) {
+  const body = document.createElement('div');
+  const hint = document.createElement('p');
+  hint.className = 'muted';
+  hint.style.cssText = 'font-size:.84rem;margin:0 0 12px';
+  hint.textContent = '仅管理员可见，不会展示给访客。建议按「背景 → 做了什么 → 结果 → 强调什么」组织。保存后记得「一键发布」。';
+  const ta = document.createElement('textarea');
+  ta.rows = 14;
+  ta.value = item.interviewNote || '';
+  ta.placeholder = '写下这段经历的面试讲法…';
+  body.append(hint, ta);
+  modal({
+    title: `💬 面试笔记 · ${title}`,
+    body,
+    wide: true,
+    okText: '保存',
+    onOk: () => {
+      const v = ta.value.trim();
+      if (v) item.interviewNote = v;
+      else delete item.interviewNote;
+      markDirty();
+      toast('面试笔记已保存到本地草稿，记得点击「一键发布」', 'ok', 3500);
+      router.resolve();
+    },
+  });
+}
+
+function bindNoteButtons(root, list, attr) {
+  $$(`[data-${attr}]`, root).forEach((b) =>
+    b.addEventListener('click', () => {
+      const item = list[+b.dataset[attr === 'noteWork' ? 'noteWork' : 'noteProj']];
+      if (item) openInterviewNote(item, item.company || item.name || '');
+    })
+  );
+}
+
+const noteBtn = (attr, idx, has) =>
+  isAdmin()
+    ? `<button class="btn btn-sm note-btn no-print ${has ? 'has' : ''}" data-${attr}="${idx}" type="button">💬 面试笔记</button>`
+    : '';
+
 function workExpItem(e, i) {
   const period = String(e.period || '');
   const [start, end] = period.split(/\s*[-–—~至到]\s*/);
@@ -267,6 +309,7 @@ function workExpItem(e, i) {
         <h3>${escapeHtml(e.company || '经历')}</h3>
         <p class="meta">
           ${escapeHtml(e.role || '')}${e.role ? '<span class="exp-degree">实习 / 工作</span>' : ''}
+          ${noteBtn('noteWork', i, !!e.interviewNote)}
         </p>
         ${e.desc ? `<p style="margin:0 0 ${points.length ? 14 : 0}px;color:var(--text-soft);font-size:15px">${escapeHtml(e.desc)}</p>` : ''}
         ${points.length ? `<ul>${points.map((x) => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
@@ -290,6 +333,7 @@ export function renderTimeline() {
         ? `<div class="exp-timeline">${works.map(workExpItem).join('')}</div>`
         : '<div class="empty">还没有实习 / 工作经历，可在后台「简历内容」中添加</div>'}
     </div>`);
+  bindNoteButtons(document, works, 'noteWork');
 }
 
 /* ---------- 文章详情 ---------- */
@@ -375,10 +419,11 @@ export function renderAbout() {
         </div>
         ${editBtn('resume')}
       </div>
-      ${projects.length ? `<div class="pj-grid">${projects.map((e) => `
+      ${projects.length ? `<div class="pj-grid">${projects.map((e, i) => `
         <div class="pj-card">
           <div class="pj-head">
             <span>${escapeHtml(e.period || '')}</span>
+            ${noteBtn('noteProj', i, !!e.interviewNote)}
             <strong>${escapeHtml(e.role || '成员')}</strong>
           </div>
           <h2>${escapeHtml(e.name || '未命名项目')}</h2>
@@ -386,6 +431,7 @@ export function renderAbout() {
           ${(e.points || []).length ? `<ul>${e.points.map((x) => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
         </div>`).join('')}</div>` : '<div class="empty">还没有项目经历，可在后台「简历内容」中添加</div>'}
     </div>`);
+  bindNoteButtons(document, projects, 'noteProj');
 }
 
 /* ---------- 联系 ---------- */

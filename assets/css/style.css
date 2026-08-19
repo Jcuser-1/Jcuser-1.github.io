@@ -801,6 +801,25 @@ input:focus, select:focus, textarea:focus {
   font-size: 13px; font-weight: 700;
 }
 
+/* ---------- 面试笔记（仅管理员） ---------- */
+
+.note-btn {
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+  flex: none;
+  margin-left: 8px;
+}
+.note-btn:hover { background: color-mix(in srgb, var(--brand) 18%, transparent); }
+.note-btn.has { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 45%, transparent); }
+.note-btn.has::after {
+  content: "●";
+  font-size: .55em;
+  vertical-align: 2px;
+  margin-left: 4px;
+  color: var(--brand);
+}
+.pj-head { flex-wrap: wrap; }
+
 /* ---------- 文章时间轴(最近更新/文章页) ---------- */
 
 .filters {
