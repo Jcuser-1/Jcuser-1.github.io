@@ -176,7 +176,7 @@ const orgLogoHtml = (name) => {
   const { light, dark } = hit[1];
   return `<span class="org-logo-wrap">
     <img class="org-logo img-l" src="${encodeURI(light)}?v=hd3" alt="${escapeHtml(name)}" loading="lazy">
-    <img class="org-logo img-d" src="${encodeURI(dark)}?v=hd3" alt="" loading="lazy">
+    <img class="org-logo img-d" src="${encodeURI(dark)}?v=hd3" alt="" loading="eager">
   </span>`;
 };
 

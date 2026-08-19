@@ -779,10 +779,16 @@ input:focus, select:focus, textarea:focus {
 .org-logo {
   height: 56px; width: auto; max-width: 190px;
   object-fit: contain;
+  transition: opacity .25s ease;
 }
-.org-logo.img-d { display: none; }
-[data-theme="dark"] .org-logo.img-l { display: none; }
-[data-theme="dark"] .org-logo.img-d { display: block; }
+/* 深色版叠加在浅色版上层，用透明度切换（保持图片始终加载，主题切换平滑过渡） */
+.org-logo.img-d {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0; pointer-events: none;
+}
+[data-theme="dark"] .org-logo.img-l { opacity: 0; }
+[data-theme="dark"] .org-logo.img-d { opacity: 1; }
 /* 教育背景校徽放大 */
 .entry .org-logo { height: 80px; max-width: 340px; }
 .org-logo-text {
