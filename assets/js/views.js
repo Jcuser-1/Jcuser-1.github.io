@@ -168,6 +168,7 @@ const ORG_LOGOS = {
   '电子科技大学': 'img/电子科技大学.webp',
   '浙江理工大学': 'img/浙江理工大学.webp',
   '梅卡曼德': 'img/梅卡曼德logo.png',
+  '联芸': 'img/联芸科技.webp',
 };
 const logoFor = (name) => {
   const n = String(name || '');
