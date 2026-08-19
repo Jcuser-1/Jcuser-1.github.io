@@ -165,10 +165,10 @@ export function renderHome() {
 
 /** 机构徽标映射：教育背景 / 实习卡片自动匹配（文件名含中文，需编码） */
 const ORG_LOGOS = {
-  '电子科技大学': 'assets/img/电子科技大学.webp',
-  '浙江理工大学': 'assets/img/浙江理工大学.webp',
-  '梅卡曼德': 'assets/img/梅卡曼德logo.png',
-  '联芸': 'assets/img/联芸科技.webp',
+  '电子科技大学': 'assets/img/电子科技大学.webp?v=alpha',
+  '浙江理工大学': 'assets/img/浙江理工大学.webp?v=alpha',
+  '梅卡曼德': 'assets/img/梅卡曼德logo.png?v=alpha',
+  '联芸': 'assets/img/联芸科技.webp?v=alpha',
 };
 const logoFor = (name) => {
   const n = String(name || '');
