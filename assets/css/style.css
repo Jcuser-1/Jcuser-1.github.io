@@ -780,13 +780,11 @@ input:focus, select:focus, textarea:focus {
   flex: none;
   object-fit: contain;
 }
+/* 教育背景校徽放大 */
+.entry .org-logo { height: 58px; max-width: 176px; }
+/* 深色模式：提亮 + 柔光，让深色系校徽融入背景（替代白色垫底） */
 [data-theme="dark"] .org-logo {
-  /* 深色模式下为透明 logo 提供浅色垫底保证可读 */
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  padding: 4px;
-  height: 52px;
-  box-sizing: content-box;
+  filter: brightness(1.75) drop-shadow(0 0 7px rgba(255, 255, 255, 0.22));
 }
 .org-logo-text {
   display: grid; place-items: center;
