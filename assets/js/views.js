@@ -163,6 +163,24 @@ export function renderHome() {
 
 /* ---------- 简历 ---------- */
 
+/** 机构徽标映射：教育背景 / 实习卡片自动匹配（文件名含中文，需编码） */
+const ORG_LOGOS = {
+  '电子科技大学': 'img/电子科技大学.webp',
+  '浙江理工大学': 'img/浙江理工大学.webp',
+  '梅卡曼德': 'img/梅卡曼德logo.png',
+};
+const logoFor = (name) => {
+  const n = String(name || '');
+  for (const [k, v] of Object.entries(ORG_LOGOS)) if (n.includes(k)) return encodeURI(v);
+  return null;
+};
+const orgLogoHtml = (name) => {
+  const src = logoFor(name);
+  return src
+    ? `<img class="org-logo" src="${src}" alt="${escapeHtml(name)}" loading="lazy">`
+    : `<span class="org-logo org-logo-text">${escapeHtml((name || '·').slice(0, 1))}</span>`;
+};
+
 /** 简历正文（教育 / 工作 / 项目 / 技能 / 奖项），公开简历页与版本预览共用 */
 export function resumeBodyHtml(r, { editable = false } = {}) {
   const edit = editable
@@ -172,12 +190,17 @@ export function resumeBodyHtml(r, { editable = false } = {}) {
     <h2 class="section-title">${title}${edit}</h2>
     ${arr && arr.length ? `<div class="group">${arr.map(fn).join('')}</div>` : '<p class="muted">暂无内容</p>'}`;
 
-  const entry = (title, at, period, desc, points) => `
+  const entry = (title, at, period, desc, points, logo = false) => `
     <div class="entry">
       <div class="entry-head">
-        <h3>${escapeHtml(title || '')}</h3>
-        ${at ? `<span class="at">${escapeHtml(at)}</span>` : ''}
-        ${period ? `<span class="period">${escapeHtml(period)}</span>` : ''}
+        ${logo ? orgLogoHtml(title) : ''}
+        <div class="entry-main">
+          <div class="entry-line">
+            <h3>${escapeHtml(title || '')}</h3>
+            ${at ? `<span class="at">${escapeHtml(at)}</span>` : ''}
+          </div>
+          ${period ? `<span class="period">${escapeHtml(period)}</span>` : ''}
+        </div>
       </div>
       ${desc ? `<p class="desc">${escapeHtml(desc)}</p>` : ''}
       ${points && points.length ? `<ul>${points.map((x) => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
@@ -190,7 +213,7 @@ export function resumeBodyHtml(r, { editable = false } = {}) {
   });
 
   return `
-    ${list('教育背景', r.education, (e) => entry(e.school, e.major ? `${e.major}${e.degree ? ' · ' + e.degree : ''}` : e.degree, e.period, e.desc))}
+    ${list('教育背景', r.education, (e) => entry(e.school, e.major ? `${e.major}${e.degree ? ' · ' + e.degree : ''}` : e.degree, e.period, e.desc, null, true))}
     ${list('实习 / 工作经历', r.work, (e) => entry(e.company, e.role, e.period, e.desc, e.points))}
     ${list('项目经历', r.projects, (e) => entry(e.name, e.role, e.period, e.desc, e.points))}
 
@@ -309,11 +332,16 @@ function workExpItem(e, i) {
       </div>
       <div class="exp-rail"><span class="exp-dot"></span></div>
       <div class="exp-card">
-        <h3>${escapeHtml(e.company || '经历')}</h3>
-        <p class="meta">
-          ${escapeHtml(e.role || '')}${e.role ? '<span class="exp-degree">实习 / 工作</span>' : ''}
-          ${noteBtn('note-work', i, !!e.interviewNote)}
-        </p>
+        <div class="exp-org">
+          ${orgLogoHtml(e.company)}
+          <div class="exp-org-main">
+            <h3>${escapeHtml(e.company || '经历')}</h3>
+            <p class="meta">
+              ${escapeHtml(e.role || '')}${e.role ? '<span class="exp-degree">实习 / 工作</span>' : ''}
+              ${noteBtn('note-work', i, !!e.interviewNote)}
+            </p>
+          </div>
+        </div>
         ${e.desc ? `<p style="margin:0 0 ${points.length ? 14 : 0}px;color:var(--text-soft);font-size:15px">${escapeHtml(e.desc)}</p>` : ''}
         ${points.length ? `<ul>${points.map((x) => `<li>${escapeHtml(x)}</li>`).join('')}</ul>` : ''}
       </div>

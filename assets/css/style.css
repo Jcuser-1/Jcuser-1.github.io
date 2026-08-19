@@ -769,6 +769,33 @@ input:focus, select:focus, textarea:focus {
 }
 .exp-item.alt .exp-card { border-top-color: var(--accent); }
 .exp-card h3 { margin: 0 0 8px; font-size: 22px; font-weight: 700; }
+.exp-org { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.exp-org-main { min-width: 0; flex: 1; }
+.exp-org-main h3 { margin: 0 0 4px; }
+.exp-org-main .meta { margin: 0; }
+
+/* 机构徽标（校徽 / 公司 logo / 首字兜底） */
+.org-logo {
+  width: 46px; height: 46px; flex: none;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  padding: 5px;
+  box-shadow: var(--shadow-sm);
+}
+.org-logo-text {
+  display: grid; place-items: center;
+  padding: 0;
+  background: var(--nav-ink, #003366);
+  color: #fff;
+  font-size: 19px; font-weight: 700;
+  border: none;
+}
+.entry-head { align-items: center; }
+.entry-main { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.entry-line { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0; }
+.entry-main .period { margin-left: auto; }
 .exp-card .meta { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
 .exp-degree {
   display: inline-block;
