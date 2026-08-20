@@ -14,28 +14,6 @@ import { renderAdmin } from './editor.js?v=20260822a';
 
 const app = () => document.getElementById('app');
 
-/* ---------- 全站动态粒子背景（颜色随页面主题变化） ---------- */
-
-const PAGE_COLORS = {
-  home: '110, 178, 255',
-  resume: '0, 113, 227',
-  timeline: '127, 123, 255',
-  about: '232, 146, 38',
-  contact: '0, 165, 165',
-  search: '175, 82, 222',
-  post: '90, 140, 220',
-  works: '255, 100, 130',
-  admin: '110, 178, 255',
-  '404': '175, 82, 222',
-};
-let globalBg = null;
-function mountGlobalBg(color) {
-  const canvas = document.getElementById('bgCanvas');
-  if (!canvas) return;
-  if (globalBg) globalBg.destroy();
-  globalBg = mountTechCanvas(canvas, { density: 26000, color, alpha: 0.58, link: 150 });
-}
-
 /* ---------- 启动 ---------- */
 
 async function boot() {
@@ -254,14 +232,11 @@ function startApp() {
       return;
     }
     // 每页专属动态背景标记 + 粒子换色
-    const page = (path.split('?')[0].split('/')[1] || 'home');
-    document.body.dataset.page = page;
-    mountGlobalBg(PAGE_COLORS[page] || PAGE_COLORS.home);
+    document.body.dataset.page = path.split('?')[0].split('/')[1] || 'home';
     views.highlightNav(path);
   });
 
   router.start();
-  mountGlobalBg(PAGE_COLORS.home);
 
   // 会话过期自动回到登录页
   setInterval(() => {
