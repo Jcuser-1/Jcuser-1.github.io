@@ -392,36 +392,44 @@ input:focus, select:focus, textarea:focus {
   transition: height .3s cubic-bezier(.2, .8, .3, 1);
 }
 .nav.scrolled .nav-inner { height: 52px; }
-/* 奔跑小人 ×3（弯曲肘膝二级关节，三人错拍追逐，悬停加速） */
-.runners { display: flex; align-items: center; gap: 1px; flex: none; }
-.runner {
-  width: 26px; height: 30px;
+/* 遛狗小人：人慢跑 + 狗小碎步 + 摇尾（悬停加速） */
+.runners { display: flex; align-items: center; flex: none; }
+.runner.walk-scene {
+  width: 62px; height: 31px;
   color: #7fd8ff;
-  animation: runnerHop var(--run-dur, .55s) ease-in-out infinite;
-  animation-delay: var(--run-delay, 0s);
 }
-.runner.r2 { color: #b8e2ff; }
-.runner.r3 { color: #5fb8f0; }
-.runner.r1 { --run-dur: .52s; --run-delay: 0s; }
-.runner.r2 { --run-dur: .58s; --run-delay: .18s; }
-.runner.r3 { --run-dur: .55s; --run-delay: .34s; }
 .runner-head { fill: currentColor; }
-.runner line { stroke: currentColor; stroke-width: 3.1; stroke-linecap: round; }
+.runner line, .dog line { stroke-linecap: round; }
+.runner line { stroke: currentColor; stroke-width: 3.1; }
+.leash { stroke: rgba(191, 224, 255, 0.75); stroke-width: 1.4; stroke-dasharray: 0; }
+.dog { color: #b8e2ff; }
+.dog line { stroke: currentColor; stroke-width: 2.6; }
+.dog-head { fill: #b8e2ff; }
+.dog-tail { transform-box: view-box; transform-origin: 57.5px 24.5px; animation: tailWag .32s ease-in-out infinite alternate; }
+.dog { animation: dogBob .55s ease-in-out infinite; }
+@keyframes tailWag { from { transform: rotate(-24deg); } to { transform: rotate(18deg); } }
+@keyframes dogBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.2px); } }
+/* 人：慢跑节奏 */
 .runner .limb { transform-box: view-box; }
-.runner .arm-a, .runner .leg-b { transform-origin: 20px 13px; animation: limbA var(--run-dur, .55s) ease-in-out infinite; animation-delay: var(--run-delay, 0s); }
-.runner .arm-b, .runner .leg-a { transform-origin: 20px 13px; animation: limbB var(--run-dur, .55s) ease-in-out infinite; animation-delay: var(--run-delay, 0s); }
-.runner .leg-a, .runner .leg-b { transform-origin: 17.5px 24px; }
-.runner .leg-a .shin { transform-origin: 12px 31px; animation: shinA var(--run-dur, .55s) ease-in-out infinite; animation-delay: var(--run-delay, 0s); }
-.runner .leg-b .shin { transform-origin: 23px 30px; animation: shinB var(--run-dur, .55s) ease-in-out infinite; animation-delay: var(--run-delay, 0s); }
-@keyframes limbA { 0% { transform: rotate(42deg); } 100% { transform: rotate(-42deg); } }
-@keyframes limbB { 0% { transform: rotate(-42deg); } 100% { transform: rotate(42deg); } }
-@keyframes shinA { 0% { transform: rotate(52deg); } 100% { transform: rotate(6deg); } }
-@keyframes shinB { 0% { transform: rotate(6deg); } 100% { transform: rotate(52deg); } }
-@keyframes runnerHop {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2.2px); }
-}
-.nav-inner:hover .runner, .nav-inner:hover .runner .limb, .nav-inner:hover .runner .shin { animation-duration: .26s; }
+.runner .arm-a, .runner .leg-b { transform-origin: 19px 13px; animation: limbA .7s ease-in-out infinite; }
+.runner .arm-b, .runner .leg-a { transform-origin: 19px 13px; animation: limbB .7s ease-in-out infinite; }
+.runner .leg-a, .runner .leg-b { transform-origin: 17px 24px; }
+.runner .leg-a .shin { transform-origin: 12px 31px; animation: shinA .7s ease-in-out infinite; }
+.runner .leg-b .shin { transform-origin: 23px 30px; animation: shinB .7s ease-in-out infinite; }
+@keyframes limbA { 0% { transform: rotate(38deg); } 100% { transform: rotate(-38deg); } }
+@keyframes limbB { 0% { transform: rotate(-38deg); } 100% { transform: rotate(38deg); } }
+@keyframes shinA { 0% { transform: rotate(48deg); } 100% { transform: rotate(6deg); } }
+@keyframes shinB { 0% { transform: rotate(6deg); } 100% { transform: rotate(48deg); } }
+/* 狗：对角步态小碎步（前后对角腿同组） */
+.dog .dla, .dog .dld { transform-box: view-box; transform-origin: 78px 25.5px; animation: dogLimbA .38s ease-in-out infinite; }
+.dog .dlb, .dog .dlc { transform-box: view-box; transform-origin: 59px 25.5px; animation: dogLimbB .38s ease-in-out infinite; }
+@keyframes dogLimbA { 0% { transform: rotate(26deg); } 100% { transform: rotate(-26deg); } }
+@keyframes dogLimbB { 0% { transform: rotate(-26deg); } 100% { transform: rotate(26deg); } }
+.runner.walk-scene { animation: humanHop .7s ease-in-out infinite; }
+@keyframes humanHop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.8px); } }
+.nav-inner:hover .runner .limb, .nav-inner:hover .runner .shin { animation-duration: .32s; }
+.nav-inner:hover .dog-limb { animation-duration: .2s; }
+.nav-inner:hover .dog-tail { animation-duration: .16s; }
 
 .nav-brand {
   display: inline-flex; align-items: center; gap: 10px;

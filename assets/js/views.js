@@ -35,29 +35,25 @@ export function renderShell() {
     <header class="nav">
       <div class="nav-inner">
         <div class="runners" aria-hidden="true">
-          <svg class="runner r1" viewBox="0 0 40 46">
-            <circle cx="22.5" cy="6.5" r="4" class="runner-head"></circle>
-            <line x1="20" y1="11" x2="17.5" y2="24" class="runner-torso"></line>
-            <g class="limb arm-a"><line x1="20" y1="13" x2="26" y2="17" class="upper"></line><line x1="26" y1="17" x2="25" y2="11" class="fore"></line></g>
-            <g class="limb arm-b"><line x1="20" y1="13" x2="14" y2="16" class="upper"></line><line x1="14" y1="16" x2="15" y2="21" class="fore"></line></g>
-            <g class="limb leg-a"><line x1="17.5" y1="24" x2="12" y2="31" class="thigh"></line><line x1="12" y1="31" x2="14" y2="39" class="shin"></line></g>
-            <g class="limb leg-b"><line x1="17.5" y1="24" x2="23" y2="30" class="thigh"></line><line x1="23" y1="30" x2="21" y2="38" class="shin"></line></g>
-          </svg>
-          <svg class="runner r2" viewBox="0 0 40 46">
-            <circle cx="22.5" cy="6.5" r="4" class="runner-head"></circle>
-            <line x1="20" y1="11" x2="17.5" y2="24" class="runner-torso"></line>
-            <g class="limb arm-a"><line x1="20" y1="13" x2="26" y2="17" class="upper"></line><line x1="26" y1="17" x2="25" y2="11" class="fore"></line></g>
-            <g class="limb arm-b"><line x1="20" y1="13" x2="14" y2="16" class="upper"></line><line x1="14" y1="16" x2="15" y2="21" class="fore"></line></g>
-            <g class="limb leg-a"><line x1="17.5" y1="24" x2="12" y2="31" class="thigh"></line><line x1="12" y1="31" x2="14" y2="39" class="shin"></line></g>
-            <g class="limb leg-b"><line x1="17.5" y1="24" x2="23" y2="30" class="thigh"></line><line x1="23" y1="30" x2="21" y2="38" class="shin"></line></g>
-          </svg>
-          <svg class="runner r3" viewBox="0 0 40 46">
-            <circle cx="22.5" cy="6.5" r="4" class="runner-head"></circle>
-            <line x1="20" y1="11" x2="17.5" y2="24" class="runner-torso"></line>
-            <g class="limb arm-a"><line x1="20" y1="13" x2="26" y2="17" class="upper"></line><line x1="26" y1="17" x2="25" y2="11" class="fore"></line></g>
-            <g class="limb arm-b"><line x1="20" y1="13" x2="14" y2="16" class="upper"></line><line x1="14" y1="16" x2="15" y2="21" class="fore"></line></g>
-            <g class="limb leg-a"><line x1="17.5" y1="24" x2="12" y2="31" class="thigh"></line><line x1="12" y1="31" x2="14" y2="39" class="shin"></line></g>
-            <g class="limb leg-b"><line x1="17.5" y1="24" x2="23" y2="30" class="thigh"></line><line x1="23" y1="30" x2="21" y2="38" class="shin"></line></g>
+          <svg class="runner walk-scene" viewBox="0 0 92 46">
+            <circle cx="21" cy="6.5" r="4" class="runner-head"></circle>
+            <line x1="19" y1="11" x2="17" y2="24" class="runner-torso"></line>
+            <g class="limb arm-a"><line x1="19" y1="13" x2="25" y2="17" class="upper"></line><line x1="25" y1="17" x2="24" y2="11" class="fore"></line></g>
+            <g class="limb arm-b"><line x1="19" y1="13" x2="13" y2="16" class="upper"></line><line x1="13" y1="16" x2="14" y2="21" class="fore"></line></g>
+            <g class="limb leg-a"><line x1="17" y1="24" x2="12" y2="31" class="thigh"></line><line x1="12" y1="31" x2="14" y2="39" class="shin"></line></g>
+            <g class="limb leg-b"><line x1="17" y1="24" x2="23" y2="30" class="thigh"></line><line x1="23" y1="30" x2="21" y2="38" class="shin"></line></g>
+            <line x1="25" y1="12" x2="79" y2="23" class="leash"></line>
+            <g class="dog">
+              <line x1="57" y1="26" x2="80" y2="24" class="dog-body"></line>
+              <circle cx="84" cy="21" r="3.6" class="dog-head"></circle>
+              <line x1="87.5" y1="21.5" x2="91" y2="23" class="dog-snout"></line>
+              <line x1="83" y1="17.5" x2="81" y2="14" class="dog-ear"></line>
+              <g class="dog-limb dla"><line x1="78" y1="25.5" x2="82" y2="30.5"></line><line x1="82" y1="30.5" x2="80" y2="36"></line></g>
+              <g class="dog-limb dlb"><line x1="76.5" y1="25.5" x2="72.5" y2="30.5"></line><line x1="72.5" y1="30.5" x2="74.5" y2="36"></line></g>
+              <g class="dog-limb dlc"><line x1="60" y1="25.5" x2="56" y2="30.5"></line><line x1="56" y1="30.5" x2="58" y2="36"></line></g>
+              <g class="dog-limb dld"><line x1="58.5" y1="25.5" x2="62.5" y2="30.5"></line><line x1="62.5" y1="30.5" x2="60.5" y2="36"></line></g>
+              <line x1="57.5" y1="24.5" x2="52" y2="19" class="dog-tail"></line>
+            </g>
           </svg>
         </div>
         <a class="nav-brand" href="#/">
