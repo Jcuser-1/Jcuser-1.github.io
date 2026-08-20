@@ -6,13 +6,25 @@ import { login, restore, session, isAdmin, logout } from './auth.js';
 import { initBackToTop, toast, $ } from './ui.js';
 import { escapeHtml } from './markdown.js';
 import { passwordStrength } from './crypto.js';
-import { mountTechCanvas } from './bg-canvas.js';
+import { mountTechCanvas, mountStarRain } from './bg-canvas.js';
 import * as gh from './github.js';
 import * as router from './router.js';
 import * as views from './views.js?v=20260822a';
 import { renderAdmin } from './editor.js?v=20260822a';
 
 const app = () => document.getElementById('app');
+
+/* ---------- 简历页两侧星雨装饰 ---------- */
+let sideRains = [];
+function setSideRain(on) {
+  sideRains.forEach((x) => x.destroy());
+  sideRains = [];
+  if (!on) return;
+  ['sideRainL', 'sideRainR'].forEach((id) => {
+    const c = document.getElementById(id);
+    if (c) sideRains.push(mountStarRain(c));
+  });
+}
 
 /* ---------- 启动 ---------- */
 
@@ -232,7 +244,9 @@ function startApp() {
       return;
     }
     // 每页专属动态背景标记 + 粒子换色
-    document.body.dataset.page = path.split('?')[0].split('/')[1] || 'home';
+    const page = path.split('?')[0].split('/')[1] || 'home';
+    document.body.dataset.page = page;
+    setSideRain(page === 'resume');
     views.highlightNav(path);
   });
 
