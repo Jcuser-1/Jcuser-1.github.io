@@ -392,6 +392,27 @@ input:focus, select:focus, textarea:focus {
   transition: height .3s cubic-bezier(.2, .8, .3, 1);
 }
 .nav.scrolled .nav-inner { height: 52px; }
+/* 奔跑小人（纯 CSS 动画，悬停加速） */
+.runner {
+  width: 30px; height: 33px; flex: none;
+  color: #7fd8ff;
+  animation: runnerHop var(--run-dur, .55s) ease-in-out infinite;
+  cursor: pointer;
+}
+.runner-head { fill: currentColor; }
+.runner line { stroke: currentColor; stroke-width: 3.4; stroke-linecap: round; }
+.runner .limb { transform-box: view-box; }
+.runner .arm-a, .runner .leg-b { transform-origin: 20px 15px; animation: limbA var(--run-dur, .55s) ease-in-out infinite; }
+.runner .arm-b, .runner .leg-a { transform-origin: 20px 15px; animation: limbB var(--run-dur, .55s) ease-in-out infinite; }
+.runner .leg-a, .runner .leg-b { transform-origin: 19px 25px; }
+@keyframes limbA { 0% { transform: rotate(40deg); } 100% { transform: rotate(-40deg); } }
+@keyframes limbB { 0% { transform: rotate(-40deg); } 100% { transform: rotate(40deg); } }
+@keyframes runnerHop {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-2.5px) rotate(-4deg); }
+}
+.nav-inner:hover .runner { --run-dur: .26s; }
+
 .nav-brand {
   display: inline-flex; align-items: center; gap: 10px;
   letter-spacing: -0.02em; white-space: nowrap;
@@ -1302,6 +1323,7 @@ p { text-wrap: pretty; }
   body { font-size: 15px; }
   .nav-toggle { display: inline-flex; }
   .brand-text small { display: none; }
+  .runner { display: none; }
   .nav-links {
     position: absolute; top: var(--nav-h); left: 0; right: 0;
     flex-direction: column; align-items: stretch; gap: 0; margin: 0; padding: 8px 12px 14px;

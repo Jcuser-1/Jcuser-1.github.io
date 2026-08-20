@@ -34,6 +34,16 @@ export function renderShell() {
   app().innerHTML = `
     <header class="nav">
       <div class="nav-inner">
+        <svg class="runner" viewBox="0 0 40 44" aria-hidden="true">
+          <circle cx="21" cy="7" r="4.2" class="runner-head"></circle>
+          <g class="runner-body">
+            <line x1="20" y1="12" x2="19" y2="25" class="runner-torso"></line>
+            <g class="limb arm-a"><line x1="20" y1="14" x2="27" y2="9"></line></g>
+            <g class="limb arm-b"><line x1="20" y1="14" x2="13" y2="19"></line></g>
+            <g class="limb leg-a"><line x1="19" y1="25" x2="10" y2="33"></line></g>
+            <g class="limb leg-b"><line x1="19" y1="25" x2="26" y2="34"></line></g>
+          </g>
+        </svg>
         <a class="nav-brand" href="#/">
           <span class="brand-mark">${escapeHtml(name.slice(0, 1))}</span>
           <span class="brand-text"><b>${escapeHtml(name)}</b></span>
