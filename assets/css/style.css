@@ -850,6 +850,23 @@ input:focus, select:focus, textarea:focus {
   transition: transform .2s ease, box-shadow .2s ease;
 }
 .pj-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+/* 每张卡片淡彩渐变背景 + 左侧色条（四色循环，文字保持深色清晰） */
+.pj-card:nth-child(4n+1) {
+  background: linear-gradient(155deg, rgba(0, 113, 227, 0.08), rgba(0, 113, 227, 0.015) 55%), #fff;
+  border-left: 4px solid #0a84ff;
+}
+.pj-card:nth-child(4n+2) {
+  background: linear-gradient(155deg, rgba(94, 92, 230, 0.08), rgba(94, 92, 230, 0.015) 55%), #fff;
+  border-left: 4px solid #5e5ce6;
+}
+.pj-card:nth-child(4n+3) {
+  background: linear-gradient(155deg, rgba(0, 165, 165, 0.08), rgba(0, 165, 165, 0.015) 55%), #fff;
+  border-left: 4px solid #00a5a5;
+}
+.pj-card:nth-child(4n+4) {
+  background: linear-gradient(155deg, rgba(199, 119, 0, 0.08), rgba(199, 119, 0, 0.015) 55%), #fff;
+  border-left: 4px solid #c77700;
+}
 .pj-head {
   display: flex; justify-content: space-between; align-items: center; gap: 14px;
   margin-bottom: 16px;
