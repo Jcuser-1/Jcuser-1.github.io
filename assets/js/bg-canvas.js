@@ -3,7 +3,7 @@
  * 特性：设备像素比适配 / 鼠标引力交互 / prefers-reduced-motion 静态帧 / destroy 清理。
  */
 
-export function mountTechCanvas(canvas, { density = 11000, color = '110, 178, 255', link = 130 } = {}) {
+export function mountTechCanvas(canvas, { density = 11000, color = '110, 178, 255', link = 130, alpha = 1 } = {}) {
   const ctx = canvas.getContext('2d');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -56,7 +56,7 @@ export function mountTechCanvas(canvas, { density = 11000, color = '110, 178, 25
         const dy = a.y - b.y;
         const dist = Math.hypot(dx, dy);
         if (dist < link) {
-          ctx.strokeStyle = `rgba(${color},${(1 - dist / link) * 0.26})`;
+          ctx.strokeStyle = `rgba(${color},${(1 - dist / link) * 0.26 * alpha})`;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
@@ -65,7 +65,7 @@ export function mountTechCanvas(canvas, { density = 11000, color = '110, 178, 25
       }
     }
     for (const d of dots) {
-      ctx.fillStyle = `rgba(${color},0.9)`;
+      ctx.fillStyle = `rgba(${color},${0.9 * alpha})`;
       ctx.beginPath();
       ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
       ctx.fill();
