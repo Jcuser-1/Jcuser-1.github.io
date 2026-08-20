@@ -1333,7 +1333,7 @@ p { text-wrap: pretty; }
   body { font-size: 15px; }
   .nav-toggle { display: inline-flex; }
   .brand-text small { display: none; }
-  .runner { display: none; }
+  .runners { display: none; }
   .nav-links {
     position: absolute; top: var(--nav-h); left: 0; right: 0;
     flex-direction: column; align-items: stretch; gap: 0; margin: 0; padding: 8px 12px 14px;
