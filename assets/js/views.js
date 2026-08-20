@@ -58,6 +58,12 @@ export function renderShell() {
   });
   $('#navToggle').addEventListener('click', () => $('#navLinks').classList.toggle('open'));
   $$('#navLinks a').forEach((a) => a.addEventListener('click', () => $('#navLinks').classList.remove('open')));
+
+  // 滚动收缩：页面下滚后导航变紧凑 + 阴影/流光显现
+  const navEl = document.querySelector('.nav');
+  const onScroll = () => navEl && navEl.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }
 
 export function highlightNav(path) {
