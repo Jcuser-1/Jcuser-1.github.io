@@ -33,7 +33,7 @@ function mountGlobalBg(color) {
   const canvas = document.getElementById('bgCanvas');
   if (!canvas) return;
   if (globalBg) globalBg.destroy();
-  globalBg = mountTechCanvas(canvas, { density: 26000, color, alpha: 0.4, link: 140 });
+  globalBg = mountTechCanvas(canvas, { density: 26000, color, alpha: 0.58, link: 150 });
 }
 
 /* ---------- 启动 ---------- */
