@@ -37,7 +37,7 @@ export function renderShell() {
         <div class="runners" aria-hidden="true">
           <svg class="runner walk-scene" viewBox="0 0 92 46">
             <circle cx="21" cy="6.5" r="4" class="runner-head"></circle>
-            <line x1="19" y1="11" x2="17" y2="24" class="runner-torso"></line>
+            <line x1="19" y1="11" x2="18.3" y2="24" class="runner-torso"></line>
             <g class="limb arm-a"><line x1="19" y1="13" x2="25" y2="17" class="upper"></line><line x1="25" y1="17" x2="24" y2="11" class="fore"></line></g>
             <g class="limb arm-b"><line x1="19" y1="13" x2="13" y2="16" class="upper"></line><line x1="13" y1="16" x2="14" y2="21" class="fore"></line></g>
             <g class="limb leg-a"><line x1="17" y1="24" x2="12" y2="31" class="thigh"></line><line x1="12" y1="31" x2="14" y2="39" class="shin"></line></g>
