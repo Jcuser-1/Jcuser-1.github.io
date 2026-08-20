@@ -392,26 +392,36 @@ input:focus, select:focus, textarea:focus {
   transition: height .3s cubic-bezier(.2, .8, .3, 1);
 }
 .nav.scrolled .nav-inner { height: 52px; }
-/* 奔跑小人（纯 CSS 动画，悬停加速） */
+/* 奔跑小人 ×3（弯曲肘膝二级关节，三人错拍追逐，悬停加速） */
+.runners { display: flex; align-items: center; gap: 1px; flex: none; }
 .runner {
-  width: 30px; height: 33px; flex: none;
+  width: 26px; height: 30px;
   color: #7fd8ff;
   animation: runnerHop var(--run-dur, .55s) ease-in-out infinite;
-  cursor: pointer;
+  animation-delay: var(--run-delay, 0s);
 }
+.runner.r2 { color: #b8e2ff; }
+.runner.r3 { color: #5fb8f0; }
+.runner.r1 { --run-dur: .52s; --run-delay: 0s; }
+.runner.r2 { --run-dur: .58s; --run-delay: .18s; }
+.runner.r3 { --run-dur: .55s; --run-delay: .34s; }
 .runner-head { fill: currentColor; }
-.runner line { stroke: currentColor; stroke-width: 3.4; stroke-linecap: round; }
+.runner line { stroke: currentColor; stroke-width: 3.1; stroke-linecap: round; }
 .runner .limb { transform-box: view-box; }
-.runner .arm-a, .runner .leg-b { transform-origin: 20px 15px; animation: limbA var(--run-dur, .55s) ease-in-out infinite; }
-.runner .arm-b, .runner .leg-a { transform-origin: 20px 15px; animation: limbB var(--run-dur, .55s) ease-in-out infinite; }
-.runner .leg-a, .runner .leg-b { transform-origin: 19px 25px; }
-@keyframes limbA { 0% { transform: rotate(40deg); } 100% { transform: rotate(-40deg); } }
-@keyframes limbB { 0% { transform: rotate(-40deg); } 100% { transform: rotate(40deg); } }
+.runner .arm-a, .runner .leg-b { transform-origin: 20px 13px; animation: limbA var(--run-dur, .55s) ease-in-out infinite; animation-delay: var(--run-delay, 0s); }
+.runner .arm-b, .runner .leg-a { transform-origin: 20px 13px; animation: limbB var(--run-dur, .55s) ease-in-out infinite; animation-delay: var(--run-delay, 0s); }
+.runner .leg-a, .runner .leg-b { transform-origin: 17.5px 24px; }
+.runner .leg-a .shin { transform-origin: 12px 31px; animation: shinA var(--run-dur, .55s) ease-in-out infinite; animation-delay: var(--run-delay, 0s); }
+.runner .leg-b .shin { transform-origin: 23px 30px; animation: shinB var(--run-dur, .55s) ease-in-out infinite; animation-delay: var(--run-delay, 0s); }
+@keyframes limbA { 0% { transform: rotate(42deg); } 100% { transform: rotate(-42deg); } }
+@keyframes limbB { 0% { transform: rotate(-42deg); } 100% { transform: rotate(42deg); } }
+@keyframes shinA { 0% { transform: rotate(52deg); } 100% { transform: rotate(6deg); } }
+@keyframes shinB { 0% { transform: rotate(6deg); } 100% { transform: rotate(52deg); } }
 @keyframes runnerHop {
-  0%, 100% { transform: translateY(0) rotate(-4deg); }
-  50% { transform: translateY(-2.5px) rotate(-4deg); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2.2px); }
 }
-.nav-inner:hover .runner { --run-dur: .26s; }
+.nav-inner:hover .runner, .nav-inner:hover .runner .limb, .nav-inner:hover .runner .shin { animation-duration: .26s; }
 
 .nav-brand {
   display: inline-flex; align-items: center; gap: 10px;
